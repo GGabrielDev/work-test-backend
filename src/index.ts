@@ -1,5 +1,6 @@
 import "reflect-metadata";
-import { Request, Response } from "express";
+require("dotenv").config();
+import { Request, Response, NextFunction } from "express";
 import express = require("express");
 import { createConnection } from "typeorm";
 import { AppRoutes } from "./routes";
@@ -12,7 +13,7 @@ createConnection()
     AppRoutes.forEach((route) => {
       app[route.method](
         route.path,
-        (request: Request, response: Response, next: Function) => {
+        (request: Request, response: Response, next: NextFunction) => {
           route
             .action(request, response)
             .then(() => next)

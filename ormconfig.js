@@ -1,0 +1,20 @@
+module.exports = {
+  type: "mongodb",
+  url: process.env.DB_URL,
+  retryWrites: true,
+  writeConcern: { w: "majority" },
+  ssl: true,
+  authSource: "admin",
+  replicaSet: "TestCluster0-shard-0",
+  useUnifiedTopology: true,
+  synchronize: true,
+  logging: true,
+  entities: ["src/entity/**/*.ts"],
+  migrations: ["src/migration/**/*.ts"],
+  subscribers: ["src/subscriber/**/*.ts"],
+  cli: {
+    entitiesDir: "src/entity",
+    migrationsDir: "src/migration",
+    subscribersDir: "src/subscriber",
+  },
+};

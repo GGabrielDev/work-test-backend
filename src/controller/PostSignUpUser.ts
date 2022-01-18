@@ -3,8 +3,6 @@ import { getMongoManager } from "typeorm";
 import { sign } from "jsonwebtoken";
 import { User } from "../entity/User";
 
-export type JWTType = { userId: string };
-
 export async function PostSignUpUser(req: Request, res: Response) {
   const { email, password } = req.body;
 
@@ -13,7 +11,10 @@ export async function PostSignUpUser(req: Request, res: Response) {
     const manager = getMongoManager();
     await manager.save(user);
 
-    const token = sign({ userId: user.id }, "MY-SECRET-KEY");
+    const token = sign(user.id, process.env.JWT_SECRET as string, {
+      expiresIn: "14d",
+      algorithm: "HS256",
+    });
     res.send({ token });
   } catch (err) {
     res.status(422).send(err.message);

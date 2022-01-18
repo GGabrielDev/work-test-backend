@@ -20,6 +20,11 @@ export class User {
   @Column()
   password: string;
 
+  constructor(email: string, password: string) {
+    this.email = email;
+    this.password = password;
+  }
+
   @BeforeInsert()
   hashedPassword() {
     if (!this.password) {
@@ -38,11 +43,6 @@ export class User {
         this.password = hash;
       });
     });
-  }
-
-  constructor(email: string, password: string) {
-    this.email = email;
-    this.password = password;
   }
 
   public comparePassword(candidatePassword: string): Promise<boolean> {

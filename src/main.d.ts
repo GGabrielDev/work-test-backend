@@ -1,0 +1,1 @@
+type JWTType = { userId: string };
