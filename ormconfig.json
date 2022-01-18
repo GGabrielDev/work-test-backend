@@ -1,6 +1,5 @@
 {
   "type": "mongodb",
-  "useNewUrlParser": true,
   "url": "mongodb+srv://admin:Soda1235@cluster0.trf4v.mongodb.net/workTestDB",
   "retryWrites": true,
   "writeConcern": { "w": "majority" },
