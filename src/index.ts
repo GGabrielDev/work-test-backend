@@ -6,13 +6,14 @@ import { createConnection } from "typeorm";
 import { AppRoutes } from "./routes";
 
 createConnection()
-  .then(async (connection) => {
+  .then(async () => {
     const app: express.Express = express();
     app.use(express.json());
 
     AppRoutes.forEach((route) => {
       app[route.method](
         route.path,
+        route.middlewares,
         (request: Request, response: Response, next: NextFunction) => {
           route
             .action(request, response)
@@ -26,7 +27,6 @@ createConnection()
       console.log("Listening at port 3000");
     });
 
-    connection.connect();
     console.log("Connected");
   })
   .catch((error) => console.log(error));
