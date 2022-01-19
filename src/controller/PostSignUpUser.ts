@@ -7,11 +7,11 @@ export async function PostSignUpUser(req: Request, res: Response) {
   const { email, password } = req.body;
 
   try {
-    const user = new User(email, password);
     const manager = getMongoManager();
+    const user = manager.create(User, { email, password });
     await manager.save(user);
 
-    const token = sign(user.id, process.env.JWT_SECRET as string, {
+    const token = sign({ id: user.id }, process.env.JWT_SECRET as string, {
       expiresIn: "14d",
       algorithm: "HS256",
     });

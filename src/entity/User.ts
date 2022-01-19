@@ -20,18 +20,13 @@ export class User {
   @Column()
   password: string;
 
-  constructor(email: string, password: string) {
-    this.email = email;
-    this.password = password;
-  }
-
   @BeforeInsert()
-  hashedPassword() {
+  async hashedPassword(): Promise<void> {
     if (!this.password) {
       return;
     }
 
-    bcrypt.genSalt(10, (err, salt) => {
+    await bcrypt.genSalt(10, (err, salt) => {
       if (err) {
         return;
       }
@@ -43,6 +38,11 @@ export class User {
         this.password = hash;
       });
     });
+  }
+
+  constructor(email: string, password: string) {
+    this.email = email;
+    this.password = password;
   }
 
   public comparePassword(candidatePassword: string): Promise<boolean> {

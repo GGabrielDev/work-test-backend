@@ -7,7 +7,7 @@ module.exports = {
   authSource: "admin",
   replicaSet: "TestCluster0-shard-0",
   useUnifiedTopology: true,
-  synchronize: true,
+  synchronize: false,
   logging: true,
   entities: ["src/entity/**/*.ts"],
   migrations: ["src/migration/**/*.ts"],
