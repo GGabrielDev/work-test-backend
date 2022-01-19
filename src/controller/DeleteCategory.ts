@@ -1,9 +1,13 @@
 import { Request, Response } from "express";
-import { getMongoManager } from "typeorm";
+import { getMongoRepository } from "typeorm";
 import { Category } from "../entity/Category";
 
 export async function DeleteCategory(req: Request, res: Response) {
-  const manager = getMongoManager();
-  const results = manager.delete(Category, req.params.id);
-  res.send(results);
+  try {
+    const manager = getMongoRepository(Category);
+    await manager.delete(req.params.id);
+    res.status(200).send("Category deleted susccesfully");
+  } catch (err) {
+    res.status(400).send(err);
+  }
 }

@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { getMongoManager } from "typeorm";
+import { getMongoRepository } from "typeorm";
 import { validateOrReject } from "class-validator";
 
 import { Category } from "../entity/Category";
@@ -14,8 +14,8 @@ export async function PostCreateCategory(req: Request, res: Response) {
         throw err;
       });
 
-      const manager = getMongoManager();
-      const category = await manager.create(Category, entity);
+      const manager = getMongoRepository(Category);
+      const category = await manager.create(entity);
       const results = await manager.save(category);
 
       res.status(201).send(results);
