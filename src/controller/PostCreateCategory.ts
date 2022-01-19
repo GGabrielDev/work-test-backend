@@ -1,18 +1,28 @@
 import { Request, Response } from "express";
 import { getMongoManager } from "typeorm";
+import { validateOrReject } from "class-validator";
+
 import { Category } from "../entity/Category";
+import { CategoryMapper } from "../mappings/CategoryMapping";
 
 export async function PostCreateCategory(req: Request, res: Response) {
   if (req.body) {
     try {
+      const entity = CategoryMapper.dtoToEntity(req.body);
+      if (entity === null) throw "Entity empty";
+      await validateOrReject(entity).catch((err) => {
+        throw err;
+      });
+
       const manager = getMongoManager();
-      const category = await manager.create(Category, req.body);
+      const category = await manager.create(Category, entity);
       const results = await manager.save(category);
+
       res.status(201).send(results);
     } catch (err) {
-      res.status(400).send("Bad request");
+      res.status(400).send(`Bad request: ${err}`);
     }
   } else {
-    res.status(204).send("Empty request body");
+    res.status(400).send("Empty request body");
   }
 }
