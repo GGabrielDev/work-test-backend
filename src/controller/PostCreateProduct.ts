@@ -4,12 +4,20 @@ import { validateOrReject } from "class-validator";
 
 import { Product } from "../entity/Product";
 import { ProductMapper } from "../mappings/ProductMapping";
+import { CategoryMapper } from "../mappings/CategoryMapping";
 
 export async function PostCreateProduct(req: Request, res: Response) {
   if (req.body) {
     try {
       const entity = ProductMapper.dtoToEntity(req.body);
-      if (entity === null) throw "Entity empty";
+      if (entity === null) {
+        throw "Entity empty";
+      } else {
+        const category = CategoryMapper.entityToDto(req.body.category);
+        if (category === null) throw "Product's category empty";
+        entity.category = category;
+      }
+
       await validateOrReject(entity).catch((err) => {
         throw err;
       });

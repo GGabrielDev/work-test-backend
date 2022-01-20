@@ -8,8 +8,9 @@ import { DeleteCategory } from "./controller/DeleteCategory";
 import { PostCreateProduct } from "./controller/PostCreateProduct";
 import { GetProducts } from "./controller/GetProducts";
 import { GetProductsByCategory } from "./controller/GetProductsByCategory";
-import requireAuth = require("./middlewares/requireAuth");
 import { PutUpdateProducts } from "./controller/PutUpdateProducts";
+import { DeleteProduct } from "./controller/DeleteProduct";
+import requireAuth = require("./middlewares/requireAuth");
 
 export const AppRoutes = [
   {
@@ -55,7 +56,7 @@ export const AppRoutes = [
   },
   {
     path: "/products",
-    method: "post",
+    method: "get",
     action: GetProducts,
   },
   {
@@ -67,5 +68,10 @@ export const AppRoutes = [
     path: "/products/:id",
     method: "put",
     action: PutUpdateProducts,
+  },
+  {
+    path: "/products/:id",
+    method: "delete",
+    action: DeleteProduct,
   },
 ];

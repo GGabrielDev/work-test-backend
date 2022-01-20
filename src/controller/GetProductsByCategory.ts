@@ -9,10 +9,15 @@ export async function GetProductsByCategory(req: Request, res: Response) {
 
   if (category) {
     const productManager = getMongoRepository(Product);
-    const products = await productManager.find({ category });
+    const products = await productManager.find();
+    const results = products.filter(
+      (product) => product.category.name == category.name
+    );
+
+    console.log(results);
 
     res.status(200).json(products);
   } else {
-    res.status(401).send("Category not found");
+    res.status(404).send("Category not found");
   }
 }

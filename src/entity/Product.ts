@@ -1,11 +1,4 @@
-import {
-  Entity,
-  ObjectIdColumn,
-  Column,
-  ObjectID,
-  OneToOne,
-  JoinColumn,
-} from "typeorm";
+import { Entity, ObjectIdColumn, Column, ObjectID } from "typeorm";
 import { Category } from "./Category";
 
 @Entity("products")
@@ -25,7 +18,6 @@ export class Product {
   @Column()
   img: string;
 
-  @OneToOne(() => Category)
-  @JoinColumn()
+  @Column(() => Category)
   category: Category;
 }
