@@ -7,8 +7,9 @@ import { PutUpdateCategories } from "./controller/PutUpdateCategories";
 import { DeleteCategory } from "./controller/DeleteCategory";
 import { PostCreateProduct } from "./controller/PostCreateProduct";
 import { GetProducts } from "./controller/GetProducts";
+import { GetProductsByCategory } from "./controller/GetProductsByCategory";
 import requireAuth = require("./middlewares/requireAuth");
-import emptyMiddleware = require("./middlewares/emptyMiddleware");
+import { PutUpdateProducts } from "./controller/PutUpdateProducts";
 
 export const AppRoutes = [
   {
@@ -21,48 +22,50 @@ export const AppRoutes = [
     path: "/user/signup",
     method: "post",
     action: PostSignUpUser,
-    middlewares: emptyMiddleware,
   },
   {
     path: "/user/signin",
     method: "post",
     action: PostSignInUser,
-    middlewares: emptyMiddleware,
   },
   {
     path: "/categories",
     method: "post",
     action: PostCreateCategory,
-    middlewares: emptyMiddleware,
   },
   {
     path: "/categories",
     method: "get",
     action: GetCategories,
-    middlewares: emptyMiddleware,
   },
   {
     path: "/categories/:id",
     method: "put",
     action: PutUpdateCategories,
-    middlewares: emptyMiddleware,
   },
   {
     path: "/categories/:id",
     method: "delete",
     action: DeleteCategory,
-    middlewares: emptyMiddleware,
   },
   {
     path: "/products",
     method: "post",
     action: PostCreateProduct,
-    middlewares: emptyMiddleware,
   },
   {
     path: "/products",
     method: "post",
     action: GetProducts,
-    middlewares: emptyMiddleware,
+  },
+  {
+    path: "/products/:categoryId",
+    method: "get",
+    action: GetProductsByCategory,
+  },
+  {
+    path: "/products/:id",
+    method: "put",
+    action: PutUpdateProducts,
   },
 ];

@@ -28,18 +28,4 @@ export class Product {
   @OneToOne(() => Category)
   @JoinColumn()
   category: Category;
-
-  constructor(
-    name: string,
-    stock: number,
-    price: number,
-    img: string,
-    category: Category
-  ) {
-    this.name = name;
-    this.stock = stock;
-    this.price = price;
-    this.img = img;
-    this.category = category;
-  }
 }

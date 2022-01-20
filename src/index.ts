@@ -4,6 +4,7 @@ import { Request, Response, NextFunction, RequestHandler } from "express";
 import express = require("express");
 import { createConnection } from "typeorm";
 import { AppRoutes } from "./routes";
+import emptyMiddleware = require("./middlewares/emptyMiddleware");
 
 createConnection()
   .then(async () => {
@@ -11,8 +12,11 @@ createConnection()
     app.use(express.json());
 
     AppRoutes.forEach((route) => {
+      let middlewares = emptyMiddleware;
+      if (route.middlewares) middlewares = route.middlewares;
+
       app[route.method](route.path, [
-        route.middlewares,
+        middlewares,
         (request: Request, response: Response, next: NextFunction) => {
           route
             .action(request, response)
