@@ -13,8 +13,6 @@ export async function PostSignInUser(req: Request, res: Response) {
   const manager = getMongoManager();
   const user = await manager.findOne(User, { email });
 
-  console.log(user);
-
   if (!user) {
     res.status(422).send({ error: "Invalid e-mail or password" });
   } else {

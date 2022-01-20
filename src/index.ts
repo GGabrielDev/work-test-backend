@@ -4,25 +4,26 @@ import { Request, Response, NextFunction, RequestHandler } from "express";
 import express = require("express");
 import { createConnection } from "typeorm";
 import { AppRoutes } from "./routes";
-import { GetAuthUser } from "./controller/GetAuthUser";
-import requireAuth = require("./middlewares/requireAuth");
+import emptyMiddleware = require("./middlewares/emptyMiddleware");
 
 createConnection()
   .then(async () => {
     const app: express.Express = express();
     app.use(express.json());
-    app.use("/", [requireAuth, GetAuthUser] as RequestHandler[]);
 
     AppRoutes.forEach((route) => {
-      app[route.method](
-        route.path,
+      let middlewares = route.middlewares;
+      if (!middlewares) middlewares = emptyMiddleware;
+
+      app[route.method](route.path, [
+        middlewares,
         (request: Request, response: Response, next: NextFunction) => {
           route
             .action(request, response)
             .then(() => next)
             .catch((err) => next(err));
-        }
-      );
+        },
+      ] as RequestHandler[]);
     });
 
     app.listen(3000, () => {
