@@ -20,12 +20,12 @@ export const AppRoutes = [
     middlewares: requireAuth,
   },
   {
-    path: "/user/signup",
+    path: "/register",
     method: "post",
     action: PostSignUpUser,
   },
   {
-    path: "/user/signin",
+    path: "/login",
     method: "post",
     action: PostSignInUser,
   },
