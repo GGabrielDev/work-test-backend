@@ -15,12 +15,12 @@ export async function PostCreateCategory(req: Request, res: Response) {
       });
 
       const manager = getMongoRepository(Category);
-      const category = await manager.create(entity);
+      const category = manager.create(entity);
       const results = await manager.save(category);
 
       res.status(201).send(results);
     } catch (err) {
-      res.status(400).send(`Bad request: ${err}`);
+      res.status(401).send(`Bad request: ${err}`);
     }
   } else {
     res.status(400).send("Empty request body");

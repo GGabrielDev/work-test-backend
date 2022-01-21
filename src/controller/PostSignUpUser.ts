@@ -15,7 +15,7 @@ export async function PostSignUpUser(req: Request, res: Response) {
       expiresIn: "14d",
       algorithm: "HS256",
     });
-    res.send({ token });
+    res.status(200).send({ token });
   } catch (err) {
     res.status(422).send(err.message);
   }

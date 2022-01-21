@@ -26,7 +26,7 @@ export async function PostSignInUser(req: Request, res: Response) {
           algorithm: "HS256",
         }
       );
-      res.send({ token });
+      res.status(200).send({ token });
     } catch (err) {
       res.status(422).send({ error: "Invalid e-mail or password" });
     }

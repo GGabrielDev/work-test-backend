@@ -16,7 +16,7 @@ export async function PutUpdateCategories(req: Request, res: Response) {
     });
 
     await manager.update(category, entity);
-    res.status(200).send("Category updated susccesfully");
+    res.status(200).send("Category updated successfully");
   } else {
     res.status(404).send("Category not found");
   }

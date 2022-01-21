@@ -23,7 +23,7 @@ export async function PostCreateProduct(req: Request, res: Response) {
       });
 
       const manager = getMongoRepository(Product);
-      const product = await manager.create(entity);
+      const product = manager.create(entity);
       const results = await manager.save(product);
 
       res.status(201).send(results);
